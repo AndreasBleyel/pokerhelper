@@ -2,12 +2,11 @@ import random
 
 from Card import Card
 
-
 class Model:
 
     def __init__(self):
-        self._hand = ""
-        self._board = ""
+        self._hand = []
+        self._board = []
         self._cards = []
 
     @property
