@@ -28,6 +28,8 @@ class Controller:
             odds = self.model.calc_odds()
             self.view.set_odds_label(odds)
 
+        print(which_btn)
+
     def start(self):
         self.view.show()
 

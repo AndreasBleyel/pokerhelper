@@ -33,7 +33,7 @@ class Model:
         path = "PNG/"
         format = ".png"
         back = "blue_back"
-        for i in range(13):
+        for i in range(52):
             card = Card(path+str(i)+format)
             self._cards.append(card)
 
