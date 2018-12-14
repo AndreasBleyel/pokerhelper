@@ -4,9 +4,10 @@ from PIL import ImageFilter
 import tkinter as tk
 
 class View:
-    def __init__(self):
+    def __init__(self, cards):
 
         self.listener = None
+        self.cards = cards
 
         self.window = tk.Tk()
         self.window.resizable(False, False)
@@ -19,7 +20,7 @@ class View:
         self.player_hand_label = tk.Label(self.window, text="Your Hand").grid(row=3, column=0)
         self.player_hand = tk.Label(self.window, textvariable=self.player_hand_string).grid(row=3, column=1)
 
-        self.img = Image.open("PNG/blue_back.png")
+        self.img = Image.open(self.cards[-1].img_path)
         self.img = self.img.resize(((55,75)), Image.ANTIALIAS)
         #self.img = self.img.filter(ImageFilter.DETAIL)
         self.card_back = ImageTk.PhotoImage(self.img)
@@ -39,12 +40,12 @@ class View:
         self.hand_or_board_string.set("Hand")
         self.btn_hand_or_board = tk.Button(self.window, command= lambda: self.change("hand_board"), textvariable=self.hand_or_board_string).grid(row=0, column=0)
 
-        self.img = Image.open("PNG/2C.png")
+        self.img = Image.open(self.cards[12].img_path)
         self.img = self.img.resize(((55,75)), Image.ANTIALIAS)
         self.treff2 = ImageTk.PhotoImage(self.img)
         self.btn_bt2 = tk.Button(self.window,command=lambda: self.change("card"),image=self.treff2).grid(row=4,column=0)
 
-        self.img = Image.open("PNG/3C.png")
+        self.img = Image.open(self.cards[1].img_path)
         self.img = self.img.resize(((55, 75)), Image.ANTIALIAS)
         self.treff3 = ImageTk.PhotoImage(self.img)
         self.btn_bt3 = tk.Button(self.window, command=lambda: self.change("card"), image=self.treff3).grid(row=4, column=1)

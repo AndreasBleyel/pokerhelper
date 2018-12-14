@@ -1,5 +1,6 @@
 import view as v
 import model as m
+import Card
 
 class Controller:
     def __init__(self, view, model):
@@ -29,3 +30,4 @@ class Controller:
 
     def start(self):
         self.view.show()
+

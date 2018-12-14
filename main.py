@@ -1,7 +1,11 @@
-import controller as c
-import model as m
-import view as v
+import controller
+import model
+import view
 
-ctrl = c.Controller(v.View(), m.Model())
+m = model.Model()
+cards = m.create_cards()
+v = view.View(cards)
+
+ctrl = controller.Controller(v,m)
 
 ctrl.start()
