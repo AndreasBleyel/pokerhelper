@@ -22,6 +22,10 @@ class Controller:
                 or which_btn == "board_card5":
             self.highlight_selected_place(which_btn)
             self.card_to_set = which_btn
+        elif which_btn == "del":
+            if self.card_to_set == "hand_card1":
+                self.model.player_hand[0] = None
+                self.view.set_image_hand_card1(which_btn)
         else:
             if self.card_to_set == "hand_card1" and (
                     which_btn not in self.model.player_hand and which_btn not in self.model.board):

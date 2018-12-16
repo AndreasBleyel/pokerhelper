@@ -33,6 +33,9 @@ class View:
         self.btn_calc = tk.Button(self.window, command= lambda: self.change("calc"),
                                            text="Calc").grid(row=1, column=8, columnspan = 4)
 
+        self.btn_del_card = tk.Button(self.window, command=lambda : self.change("del"),
+                                      text="Remove Card").grid(row=2, column=8, columnspan= 4)
+
 
     def set_listener(self, listener):
         self.listener = listener
@@ -112,7 +115,10 @@ class View:
         self.btn_hand_card1.configure(bg="red")
 
     def set_image_hand_card1(self, index_image):
-        self.btn_hand_card1.configure(image=self.card_images[index_image])
+        if index_image == "del":
+            self.btn_hand_card1.configure(image=self.card_images[-1])
+        else:
+            self.btn_hand_card1.configure(image=self.card_images[index_image])
 
     def highlight_hand_card2(self):
         self.remove_all_highlights()
