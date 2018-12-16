@@ -41,6 +41,7 @@ class View:
         self.listener = listener
 
     def change(self, which_btn):
+        print("view: "+str(which_btn))
         if self.listener:
             self.listener(which_btn)
 
@@ -104,19 +105,34 @@ class View:
         self.hand_or_board_string.set(value)
 
     def highlight_hand_card1(self):
-        print("high1")
         self.remove_all_highlights()
         self.btn_hand_card1.configure(bg="red")
 
+    def set_image_hand_card1(self, index_image):
+        self.btn_hand_card1.configure(image=self.card_images[index_image])
+
     def highlight_hand_card2(self):
-        print("high2")
         self.remove_all_highlights()
         self.btn_hand_card2.configure(bg="red")
 
+    def set_image_hand_card2(self, index_image):
+        self.btn_hand_card2.configure(image=self.card_images[index_image])
+
     def remove_all_highlights(self):
-        print("remove")
         self.btn_hand_card1.configure(bg="white")
         self.btn_hand_card2.configure(bg="white")
+
+    def set_image_board_card1(self, which_btn):
+        pass
+
+    def set_image_board_card2(self, which_btn):
+        pass
+    def set_image_board_card3(self, which_btn):
+        pass
+    def set_image_board_card4(self, which_btn):
+        pass
+    def set_image_board_card5(self, which_btn):
+        pass
 
     def show(self):
         self.window.mainloop()
