@@ -30,10 +30,8 @@ class View:
         self.board_label = tk.Label(self.window, text="Board").grid(row=2, column=1,padx=5, pady=5)
         self.board_hand = tk.Label(self.window, text="Hand").grid(row=3, column=1,padx=5, pady=5)
 
-        self.hand_or_board_string = tk.StringVar()
-        self.hand_or_board_string.set("Hand")
-        self.btn_hand_or_board = tk.Button(self.window, command= lambda: self.change("hand_board"),
-                                           textvariable=self.hand_or_board_string).grid(row=1, column=8, columnspan = 4)
+        self.btn_calc = tk.Button(self.window, command= lambda: self.change("calc"),
+                                           text="Calc").grid(row=1, column=8, columnspan = 4)
 
 
 
@@ -101,8 +99,14 @@ class View:
     def set_board(self, board):
         pass
 
-    def set_btn_hand_board_text(self, value):
-        self.hand_or_board_string.set(value)
+    def remove_all_highlights(self):
+        self.btn_hand_card1.configure(bg="white")
+        self.btn_hand_card2.configure(bg="white")
+        self.btn_board_card1.configure(bg="white")
+        self.btn_board_card2.configure(bg="white")
+        self.btn_board_card3.configure(bg="white")
+        self.btn_board_card4.configure(bg="white")
+        self.btn_board_card5.configure(bg="white")
 
     def highlight_hand_card1(self):
         self.remove_all_highlights()
@@ -118,21 +122,40 @@ class View:
     def set_image_hand_card2(self, index_image):
         self.btn_hand_card2.configure(image=self.card_images[index_image])
 
-    def remove_all_highlights(self):
-        self.btn_hand_card1.configure(bg="white")
-        self.btn_hand_card2.configure(bg="white")
+    def highlight_board_card1(self):
+        self.remove_all_highlights()
+        self.btn_board_card1.configure(bg="red")
 
-    def set_image_board_card1(self, which_btn):
-        pass
+    def set_image_board_card1(self, index_image):
+        self.btn_board_card1.configure(image=self.card_images[index_image])
 
-    def set_image_board_card2(self, which_btn):
-        pass
-    def set_image_board_card3(self, which_btn):
-        pass
-    def set_image_board_card4(self, which_btn):
-        pass
-    def set_image_board_card5(self, which_btn):
-        pass
+    def highlight_board_card2(self):
+        self.remove_all_highlights()
+        self.btn_board_card2.configure(bg="red")
+
+    def set_image_board_card2(self, index_image):
+        self.btn_board_card2.configure(image=self.card_images[index_image])
+
+    def highlight_board_card3(self):
+        self.remove_all_highlights()
+        self.btn_board_card3.configure(bg="red")
+
+    def set_image_board_card3(self, index_image):
+        self.btn_board_card3.configure(image=self.card_images[index_image])
+
+    def highlight_board_card4(self):
+        self.remove_all_highlights()
+        self.btn_board_card4.configure(bg="red")
+
+    def set_image_board_card4(self, index_image):
+        self.btn_board_card4.configure(image=self.card_images[index_image])
+
+    def highlight_board_card5(self):
+        self.remove_all_highlights()
+        self.btn_board_card5.configure(bg="red")
+
+    def set_image_board_card5(self, index_image):
+        self.btn_board_card5.configure(image=self.card_images[index_image])
 
     def show(self):
         self.window.mainloop()
