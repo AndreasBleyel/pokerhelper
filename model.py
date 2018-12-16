@@ -5,17 +5,17 @@ from Card import Card
 class Model:
 
     def __init__(self):
-        self._hand = []
-        self._board = []
+        self._player_hand = [None] * 2
+        self._board = [None] * 5
         self._cards = []
 
     @property
-    def hand(self):
-        return self._hand
+    def player_hand(self):
+        return self._player_hand
 
-    @hand.setter
-    def hand(self, value):
-        self._hand = value
+    @player_hand.setter
+    def player_hand(self, value):
+        self.player_hand = value
 
     @property
     def board(self):
@@ -26,6 +26,22 @@ class Model:
         self._board = value
 
     def calc_odds(self):
+        if self.player_hand[0] and self.player_hand[1]:
+            if self.board[0] and self.board[1] and self.board[2] and not self.board[3] and not self.board[4]:
+                #flop
+                print("flop")
+                pass
+            elif self.board[0] and self.board[1] and self.board[2] and self.board[3] and not self.board[4]:
+                #turn
+                print("turn")
+                pass
+            elif self.board[0] and self.board[1] and self.board[2] and self.board[3] and self.board[4]:
+                #river
+                print("river")
+                pass
+        else:
+            print("Player Hand missing")
+
         return random.randint(1,10)
 
     def create_cards(self):

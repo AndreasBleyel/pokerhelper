@@ -11,48 +11,61 @@ class Controller:
 
         self.was_selected = "Hand"
         self.card_to_set = "hand_card1"
+        self.odds = 0
 
-        self.player_hand = []
 
     def change(self, which_btn):
         if which_btn == "calc":
-            print(self.model.calc_odds())
+            self.odds = self.model.calc_odds()
         elif which_btn == "hand_card1" or which_btn == "hand_card2" or which_btn == "board_card1" \
                 or which_btn == "board_card2" or which_btn == "board_card3" or which_btn == "board_card4" \
                 or which_btn == "board_card5":
             self.highlight_selected_place(which_btn)
             self.card_to_set = which_btn
         else:
-            if self.card_to_set == "hand_card1":
+            if self.card_to_set == "hand_card1" and (
+                    which_btn not in self.model.player_hand and which_btn not in self.model.board):
+                self.model.player_hand[0] = which_btn
                 self.view.set_image_hand_card1(which_btn)
                 self.card_to_set = "hand_card2"
                 self.highlight_selected_place(self.card_to_set)
-            elif self.card_to_set == "hand_card2":
+            elif self.card_to_set == "hand_card2" and (
+                    which_btn not in self.model.player_hand and which_btn not in self.model.board):
+                self.model.player_hand[1] = which_btn
                 self.view.set_image_hand_card2(which_btn)
                 self.card_to_set = "board_card1"
                 self.highlight_selected_place(self.card_to_set)
-            elif self.card_to_set == "board_card1":
+            elif self.card_to_set == "board_card1" and (
+                    which_btn not in self.model.player_hand and which_btn not in self.model.board):
+                self.model.board[0] = which_btn
                 self.view.set_image_board_card1(which_btn)
                 self.card_to_set = "board_card2"
                 self.highlight_selected_place(self.card_to_set)
-            elif self.card_to_set == "board_card2":
+            elif self.card_to_set == "board_card2" and (
+                    which_btn not in self.model.player_hand and which_btn not in self.model.board):
+                self.model.board[1] = which_btn
                 self.view.set_image_board_card2(which_btn)
                 self.card_to_set = "board_card3"
                 self.highlight_selected_place(self.card_to_set)
-            elif self.card_to_set == "board_card3":
+            elif self.card_to_set == "board_card3" and (
+                    which_btn not in self.model.player_hand and which_btn not in self.model.board):
+                self.model.board[2] = which_btn
                 self.view.set_image_board_card3(which_btn)
                 self.card_to_set = "board_card4"
                 self.highlight_selected_place(self.card_to_set)
-            elif self.card_to_set == "board_card4":
+            elif self.card_to_set == "board_card4" and (
+                    which_btn not in self.model.player_hand and which_btn not in self.model.board):
+                self.model.board[3] = which_btn
                 self.view.set_image_board_card4(which_btn)
                 self.card_to_set = "board_card5"
                 self.highlight_selected_place(self.card_to_set)
-            elif self.card_to_set == "board_card5":
+            elif self.card_to_set == "board_card5" and (
+                    which_btn not in self.model.player_hand and which_btn not in self.model.board):
+                self.model.board[4] = which_btn
                 self.view.set_image_board_card5(which_btn)
                 self.card_to_set = "hand_card1"
                 self.highlight_selected_place(self.card_to_set)
 
-        odds = self.model.calc_odds()
         self.view.set_odds_label(which_btn)
 
     def highlight_selected_place(self, place):

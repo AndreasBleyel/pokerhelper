@@ -34,7 +34,6 @@ class View:
                                            text="Calc").grid(row=1, column=8, columnspan = 4)
 
 
-
     def set_listener(self, listener):
         self.listener = listener
 
@@ -86,7 +85,7 @@ class View:
             if card_col == 13:
                 card_col = 0
                 card_row = card_row + 1
-            self.btn = tk.Button(self.window,text="A", command= lambda i=i: self.change(i),
+            self.btn = tk.Button(self.window, command= lambda i=i: self.change(i),
                                  image=self.card_images[i]).grid(row=card_row,column=card_col,padx=2, pady=1)
             card_col = card_col +1
 
