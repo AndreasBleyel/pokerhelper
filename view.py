@@ -49,20 +49,32 @@ class View:
         img = img.resize(((55, 75)), Image.ANTIALIAS)
         self.card_back = ImageTk.PhotoImage(img)
         self.btn_hand_card1 = tk.Button(self.window, image=self.card_back,
-                                        command=lambda: self.change("hand_card1")).grid(row=3, column=2)
+                                        command=lambda: self.change("hand_card1"))
+        self.btn_hand_card1.grid(row=3, column=2)
+
         self.btn_hand_card2 = tk.Button(self.window, image=self.card_back,
-                                        command=lambda: self.change("hand_card2")).grid(row=3, column=3, pady = 10)
+                                        command=lambda: self.change("hand_card2"))
+        self.btn_hand_card2.grid(row=3, column=3, pady = 10)
 
         self.btn_board_card1 = tk.Button(self.window, image=self.card_back,
-                                         command=lambda: self.change("board_card1")).grid(row=2, column=2, pady=10)
+                                         command=lambda: self.change("board_card1"))
+        self.btn_board_card1.grid(row=2, column=2, pady=10)
+
         self.btn_board_card2 = tk.Button(self.window, image=self.card_back,
-                                         command=lambda: self.change("board_card2")).grid(row=2, column=3)
+                                         command=lambda: self.change("board_card2"))
+        self.btn_board_card2.grid(row=2, column=3)
+
         self.btn_board_card3 = tk.Button(self.window, image=self.card_back,
-                                         command=lambda: self.change("board_card3")).grid(row=2, column=4)
+                                         command=lambda: self.change("board_card3"))
+        self.btn_board_card3.grid(row=2, column=4)
+
         self.btn_board_card4 = tk.Button(self.window, image=self.card_back,
-                                         command=lambda: self.change("board_card4")).grid(row=2, column=5)
+                                         command=lambda: self.change("board_card4"))
+        self.btn_board_card4.grid(row=2, column=5)
+
         self.btn_board_card5 = tk.Button(self.window, image=self.card_back,
-                                         command=lambda: self.change("board_card5")).grid(row=2, column=6)
+                                         command=lambda: self.change("board_card5"))
+        self.btn_board_card5.grid(row=2, column=6)
 
         for i in range(len(self.cards)):
             self.img = Image.open(self.cards[i].img_path)
@@ -90,6 +102,21 @@ class View:
 
     def set_btn_hand_board_text(self, value):
         self.hand_or_board_string.set(value)
+
+    def highlight_hand_card1(self):
+        print("high1")
+        self.remove_all_highlights()
+        self.btn_hand_card1.configure(bg="red")
+
+    def highlight_hand_card2(self):
+        print("high2")
+        self.remove_all_highlights()
+        self.btn_hand_card2.configure(bg="red")
+
+    def remove_all_highlights(self):
+        print("remove")
+        self.btn_hand_card1.configure(bg="white")
+        self.btn_hand_card2.configure(bg="white")
 
     def show(self):
         self.window.mainloop()
