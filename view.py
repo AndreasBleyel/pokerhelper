@@ -25,18 +25,24 @@ class View:
         self.btn_board_card5 = None
         self.show_cards()
 
-        self.odds = tk.DoubleVar()
-        self.odds_label = tk.Label(self.window, textvariable=self.odds).grid(row=0, column=8, columnspan = 4,padx=5, pady=5)
+        self.json = tk.StringVar()
+        self.json_label = tk.Label(self.window, textvariable=self.json).grid(row=0, column=17, columnspan = 10, rowspan=20, padx=5, pady=5)
 
-        self.board_label = tk.Label(self.window, text="Board").grid(row=2, column=1,padx=5, pady=5)
-        self.board_hand = tk.Label(self.window, text="Hand").grid(row=3, column=1,padx=5, pady=5)
+        self.board_label = tk.Label(self.window, text="Board").grid(row=0, column=1,padx=5, pady=5)
+        self.board_hand = tk.Label(self.window, text="Hand").grid(row=1, column=1,padx=5, pady=5)
 
         self.btn_calc = tk.Button(self.window, command= lambda: self.change("calc"),
-                                           text="Calc").grid(row=1, column=8, columnspan = 4)
+                                           text="Calc").grid(row=4, column=15, columnspan = 4)
 
         self.btn_del_card = tk.Button(self.window, command=lambda : self.change("del"),
-                                      text="Remove Card").grid(row=2, column=8, columnspan= 4)
+                                      text="Remove Card").grid(row=5, column=15, columnspan= 4)
 
+        self.bid_opp_label = tk.Label(self.window, text="Bid Opponent:").grid(row=0, column=15)
+        self.bid_opp = tk.Entry(self.window).grid(row= 0, column=16)
+        self.bid_player_label = tk.Label(self.window, text="Bid Player:").grid(row=1, column=15)
+        self.bid_player = tk.Entry(self.window).grid(row=1, column=16)
+        self.total_pot_label = tk.Label(self.window, text="Total Pot:").grid(row=2, column=15)
+        self.total_pot = tk.Entry(self.window).grid(row=2, column=16)
 
     def set_listener(self, listener):
         self.listener = listener
@@ -52,31 +58,31 @@ class View:
         self.card_back = ImageTk.PhotoImage(img)
         self.btn_hand_card1 = tk.Button(self.window, image=self.card_back,
                                         command=lambda: self.change("hand_card1"))
-        self.btn_hand_card1.grid(row=3, column=2)
+        self.btn_hand_card1.grid(row=1, column=2)
 
         self.btn_hand_card2 = tk.Button(self.window, image=self.card_back,
                                         command=lambda: self.change("hand_card2"))
-        self.btn_hand_card2.grid(row=3, column=3, pady = 10)
+        self.btn_hand_card2.grid(row=1, column=3, pady = 10)
 
         self.btn_board_card1 = tk.Button(self.window, image=self.card_back,
                                          command=lambda: self.change("board_card1"))
-        self.btn_board_card1.grid(row=2, column=2, pady=10)
+        self.btn_board_card1.grid(row=0, column=2, pady=10)
 
         self.btn_board_card2 = tk.Button(self.window, image=self.card_back,
                                          command=lambda: self.change("board_card2"))
-        self.btn_board_card2.grid(row=2, column=3)
+        self.btn_board_card2.grid(row=0, column=3)
 
         self.btn_board_card3 = tk.Button(self.window, image=self.card_back,
                                          command=lambda: self.change("board_card3"))
-        self.btn_board_card3.grid(row=2, column=4)
+        self.btn_board_card3.grid(row=0, column=4)
 
         self.btn_board_card4 = tk.Button(self.window, image=self.card_back,
                                          command=lambda: self.change("board_card4"))
-        self.btn_board_card4.grid(row=2, column=5)
+        self.btn_board_card4.grid(row=0, column=5)
 
         self.btn_board_card5 = tk.Button(self.window, image=self.card_back,
                                          command=lambda: self.change("board_card5"))
-        self.btn_board_card5.grid(row=2, column=6)
+        self.btn_board_card5.grid(row=0, column=6)
 
         for i in range(len(self.cards)):
             self.img = Image.open(self.cards[i].img_path)
@@ -93,8 +99,8 @@ class View:
                                  image=self.card_images[i]).grid(row=card_row,column=card_col,padx=2, pady=1)
             card_col = card_col +1
 
-    def set_odds_label(self, odds):
-        self.odds.set(odds)
+    def set_json_label(self, json):
+        self.json.set(json)
 
     def set_player_hand(self, player_hand):
         pass

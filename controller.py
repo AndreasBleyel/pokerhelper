@@ -1,3 +1,5 @@
+import ApiValues
+
 class Controller:
     def __init__(self, view, model):
         self.view = view
@@ -6,12 +8,10 @@ class Controller:
 
         self.was_selected = "Hand"
         self.card_to_set = "hand_card1"
-        self.odds = 0
-
 
     def change(self, which_btn):
         if which_btn == "calc":
-            self.odds = self.model.calc_odds()
+            self.view.set_json_label(ApiValues.api_response)
         elif which_btn == "hand_card1" or which_btn == "hand_card2" or which_btn == "board_card1" \
                 or which_btn == "board_card2" or which_btn == "board_card3" or which_btn == "board_card4" \
                 or which_btn == "board_card5":
@@ -82,8 +82,6 @@ class Controller:
                 self.view.set_image_board_card5(which_btn)
                 self.card_to_set = "hand_card1"
                 self.highlight_selected_place(self.card_to_set)
-
-        self.view.set_odds_label(which_btn)
 
     def highlight_selected_place(self, place):
         if place == "hand_card1":

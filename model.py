@@ -141,7 +141,7 @@ class Model:
         else:
             print("Player Hand missing")
 
-        return 1
+        return json
 
     def create_cards(self):
         path = "PNG/"
