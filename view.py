@@ -1,7 +1,8 @@
+import tkinter as tk
+
 from PIL import Image
 from PIL import ImageTk
-from PIL import ImageFilter
-import tkinter as tk
+
 
 class View:
     def __init__(self, cards):

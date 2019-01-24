@@ -1,8 +1,3 @@
-import view as v
-import model as m
-import Card
-
-
 class Controller:
     def __init__(self, view, model):
         self.view = view
