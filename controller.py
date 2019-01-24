@@ -26,6 +26,24 @@ class Controller:
             if self.card_to_set == "hand_card1":
                 self.model.player_hand[0] = None
                 self.view.set_image_hand_card1(which_btn)
+            elif self.card_to_set == "hand_card2":
+                self.model.player_hand[1] = None
+                self.view.set_image_hand_card2(which_btn)
+            elif self.card_to_set == "board_card1":
+                self.model.board[0] = None
+                self.view.set_image_board_card1(which_btn)
+            elif self.card_to_set == "board_card2":
+                self.model.board[1] = None
+                self.view.set_image_board_card2(which_btn)
+            elif self.card_to_set == "board_card3":
+                self.model.board[2] = None
+                self.view.set_image_board_card3(which_btn)
+            elif self.card_to_set == "board_card4":
+                self.model.board[3] = None
+                self.view.set_image_board_card4(which_btn)
+            elif self.card_to_set == "board_card5":
+                self.model.board[4] = None
+                self.view.set_image_board_card5(which_btn)
         else:
             if self.card_to_set == "hand_card1" and (
                     which_btn not in self.model.player_hand and which_btn not in self.model.board):

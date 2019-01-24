@@ -125,42 +125,60 @@ class View:
         self.btn_hand_card2.configure(bg="red")
 
     def set_image_hand_card2(self, index_image):
-        self.btn_hand_card2.configure(image=self.card_images[index_image])
+        if index_image == "del":
+            self.btn_hand_card2.configure(image=self.card_images[-1])
+        else:
+            self.btn_hand_card2.configure(image=self.card_images[index_image])
 
     def highlight_board_card1(self):
         self.remove_all_highlights()
         self.btn_board_card1.configure(bg="red")
 
     def set_image_board_card1(self, index_image):
-        self.btn_board_card1.configure(image=self.card_images[index_image])
+        if index_image == "del":
+            self.btn_board_card1.configure(image=self.card_images[-1])
+        else:
+            self.btn_board_card1.configure(image=self.card_images[index_image])
 
     def highlight_board_card2(self):
         self.remove_all_highlights()
         self.btn_board_card2.configure(bg="red")
 
     def set_image_board_card2(self, index_image):
-        self.btn_board_card2.configure(image=self.card_images[index_image])
+        if index_image == "del":
+            self.btn_board_card2.configure(image=self.card_images[-1])
+        else:
+            self.btn_board_card2.configure(image=self.card_images[index_image])
 
     def highlight_board_card3(self):
         self.remove_all_highlights()
         self.btn_board_card3.configure(bg="red")
 
     def set_image_board_card3(self, index_image):
-        self.btn_board_card3.configure(image=self.card_images[index_image])
+        if index_image == "del":
+            self.btn_board_card3.configure(image=self.card_images[-1])
+        else:
+            self.btn_board_card3.configure(image=self.card_images[index_image])
 
     def highlight_board_card4(self):
         self.remove_all_highlights()
         self.btn_board_card4.configure(bg="red")
 
     def set_image_board_card4(self, index_image):
-        self.btn_board_card4.configure(image=self.card_images[index_image])
+        if index_image == "del":
+            self.btn_board_card4.configure(image=self.card_images[-1])
+        else:
+            self.btn_board_card4.configure(image=self.card_images[index_image])
 
     def highlight_board_card5(self):
         self.remove_all_highlights()
         self.btn_board_card5.configure(bg="red")
 
     def set_image_board_card5(self, index_image):
-        self.btn_board_card5.configure(image=self.card_images[index_image])
+        if index_image == "del":
+            self.btn_board_card5.configure(image=self.card_images[-1])
+        else:
+            self.btn_board_card5.configure(image=self.card_images[index_image])
 
     def show(self):
         self.window.mainloop()
