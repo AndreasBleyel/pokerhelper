@@ -13,12 +13,19 @@ class View:
         self.card_back = None
 
         self.window = tk.Tk()
-        #self.window.resizable(False, False)
         self.window.title("Texas Help'em")
 
-        #self.card_window = tk.Tk()
         self.card_frame = tk.Frame(master=self.window, bg='#FFCFC9')
         self.card_frame.place(x=5, y=200, width=800, height=350)
+
+        self.button_frame = tk.Frame(master=self.window, bg="#FFABAB")
+        self.button_frame.place(x=610, y=5, width=200, height=180)
+
+        self.pot_infos_frame = tk.Frame(master=self.window, bg="#FFCDCD")
+        self.pot_infos_frame.place(x=400, y=5, width=200, height=180)
+
+        self.display_infos_frame = tk.Frame(master=self.window, bg="#FFFCFC")
+        self.display_infos_frame.place(x= 850, y=5, width=250, height = 490)
 
         self.btn_hand_card1 = None
         self.btn_hand_card2 = None
@@ -30,29 +37,40 @@ class View:
         self.show_cards()
 
         self.json = tk.StringVar()
-        self.json_label = tk.Label(self.window, textvariable=self.json).grid(row=0, column=17, columnspan = 10, rowspan=20, padx=5, pady=5)
+        self.json_label = tk.Label(master=self.display_infos_frame, textvariable=self.json)
+        self.json_label.place(x=5, y=5)
 
-        self.board_label = tk.Label(self.window, text="Board").grid(row=0, column=1,padx=5, pady=5)
-        self.board_hand = tk.Label(self.window, text="Hand").grid(row=1, column=1,padx=5, pady=5)
+        self.board_label = tk.Label(self.window, text="Board").grid(row=0, column=1, padx=5, pady=5)
+        self.board_hand = tk.Label(self.window, text="Hand").grid(row=1, column=1, padx=5, pady=5)
 
-        self.btn_calc = tk.Button(self.window, command= lambda: self.change("calc"),
-                                           text="Calc").grid(row=4, column=15, columnspan = 4)
+        self.btn_calc = tk.Button(master=self.button_frame, command=lambda: self.change("calc"),
+                                  text="Calc")
+        self.btn_calc.place(x=5, y=5)
 
-        self.btn_del_card = tk.Button(self.window, command=lambda : self.change("del"),
-                                      text="Remove Card").grid(row=5, column=15, columnspan= 4)
+        self.btn_del_card = tk.Button(self.button_frame, command=lambda: self.change("del"),
+                                      text="Remove Card")
+        self.btn_del_card.place(x=5, y=40)
 
-        self.bid_opp_label = tk.Label(self.window, text="Bid Opponent:").grid(row=0, column=15)
-        self.bid_opp = tk.Entry(self.window).grid(row= 0, column=16)
-        self.bid_player_label = tk.Label(self.window, text="Bid Player:").grid(row=1, column=15)
-        self.bid_player = tk.Entry(self.window).grid(row=1, column=16)
-        self.total_pot_label = tk.Label(self.window, text="Total Pot:").grid(row=2, column=15)
-        self.total_pot = tk.Entry(self.window).grid(row=2, column=16)
+        self.bid_opp_label = tk.Label(master=self.pot_infos_frame, text="Bid Opponent:")
+        self.bid_opp_label.place(x=5,y=5)
+        self.bid_opp = tk.Entry(master=self.pot_infos_frame)
+        self.bid_opp.place(x=70,y =5)
+
+        self.bid_player_label = tk.Label(master=self.pot_infos_frame, text="Bid Player:")
+        self.bid_player_label.place(x=5,y=50)
+        self.bid_player = tk.Entry(master=self.pot_infos_frame)
+        self.bid_player.place(x=70, y=50)
+
+        self.total_pot_label = tk.Label(master=self.pot_infos_frame, text="Total Pot:")
+        self.total_pot_label.place(x=5, y=95)
+        self.total_pot = tk.Entry(master=self.pot_infos_frame)
+        self.total_pot.place(x=70, y=95)
 
     def set_listener(self, listener):
         self.listener = listener
 
     def change(self, which_btn):
-        print("view: "+str(which_btn))
+        print("view: " + str(which_btn))
         if self.listener:
             self.listener(which_btn)
 
@@ -66,7 +84,7 @@ class View:
 
         self.btn_hand_card2 = tk.Button(self.window, image=self.card_back,
                                         command=lambda: self.change("hand_card2"))
-        self.btn_hand_card2.grid(row=1, column=3, pady = 10)
+        self.btn_hand_card2.grid(row=1, column=3, pady=10)
 
         self.btn_board_card1 = tk.Button(self.window, image=self.card_back,
                                          command=lambda: self.change("board_card1"))
@@ -105,22 +123,20 @@ class View:
 
         reihe = 0
         spalte = 0
-        xwert =  0
+        xwert = 0
         ywert = 0
         for i in range(52):
             if spalte == 13:
                 spalte = 0
-                reihe = reihe +1
+                reihe = reihe + 1
                 ywert = ywert + 80
                 xwert = 0
 
-            self.btn = tk.Button(master=self.card_frame, command= lambda i=i: self.change(i),
+            self.btn = tk.Button(master=self.card_frame, command=lambda i=i: self.change(i),
                                  image=self.card_images[i])
             self.btn.place(x=xwert, y=ywert)
             xwert = xwert + 60
             spalte = spalte + 1
-
-
 
     def set_json_label(self, json):
         self.json.set(json)
