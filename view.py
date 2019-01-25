@@ -14,18 +14,19 @@ class View:
 
         self.window = tk.Tk()
         self.window.title("Texas Help'em")
+        self.window.minsize(1200,535)
 
         self.card_frame = tk.Frame(master=self.window, bg='#FFCFC9')
-        self.card_frame.place(x=5, y=200, width=800, height=350)
+        self.card_frame.place(x=5, y=200, width=790, height=330)
 
         self.button_frame = tk.Frame(master=self.window, bg="#FFABAB")
-        self.button_frame.place(x=610, y=5, width=200, height=180)
+        self.button_frame.place(x=400, y=90, width=280, height=100)
 
         self.pot_infos_frame = tk.Frame(master=self.window, bg="#FFCDCD")
-        self.pot_infos_frame.place(x=400, y=5, width=200, height=180)
+        self.pot_infos_frame.place(x=400, y=5, width=280, height=80)
 
         self.display_infos_frame = tk.Frame(master=self.window, bg="#FFFCFC")
-        self.display_infos_frame.place(x= 850, y=5, width=250, height = 490)
+        self.display_infos_frame.place(x= 800, y=5, width=380, height = 525)
 
         self.btn_hand_card1 = None
         self.btn_hand_card2 = None
@@ -54,17 +55,17 @@ class View:
         self.bid_opp_label = tk.Label(master=self.pot_infos_frame, text="Bid Opponent:")
         self.bid_opp_label.place(x=5,y=5)
         self.bid_opp = tk.Entry(master=self.pot_infos_frame)
-        self.bid_opp.place(x=70,y =5)
+        self.bid_opp.place(x=100,y =5)
 
         self.bid_player_label = tk.Label(master=self.pot_infos_frame, text="Bid Player:")
-        self.bid_player_label.place(x=5,y=50)
+        self.bid_player_label.place(x=5,y=30)
         self.bid_player = tk.Entry(master=self.pot_infos_frame)
-        self.bid_player.place(x=70, y=50)
+        self.bid_player.place(x=100, y=30)
 
         self.total_pot_label = tk.Label(master=self.pot_infos_frame, text="Total Pot:")
-        self.total_pot_label.place(x=5, y=95)
+        self.total_pot_label.place(x=5, y=55)
         self.total_pot = tk.Entry(master=self.pot_infos_frame)
-        self.total_pot.place(x=70, y=95)
+        self.total_pot.place(x=100, y=55)
 
     def set_listener(self, listener):
         self.listener = listener
@@ -111,26 +112,16 @@ class View:
             img = img.resize(((55, 75)), Image.ANTIALIAS)
             self.card_images.append(ImageTk.PhotoImage(img))
 
-        # card_row = 4
-        # card_col = 0
-        # for i in range(52):
-        #     if card_col == 13:
-        #         card_col = 0
-        #         card_row = card_row + 1
-        #     self.btn = tk.Button(self.window, command= lambda i=i: self.change(i),
-        #                          image=self.card_images[i]).grid(row=card_row,column=card_col,padx=2, pady=1)
-        #     card_col = card_col +1
-
         reihe = 0
         spalte = 0
-        xwert = 0
-        ywert = 0
+        xwert = 5
+        ywert = 5
         for i in range(52):
             if spalte == 13:
                 spalte = 0
                 reihe = reihe + 1
                 ywert = ywert + 80
-                xwert = 0
+                xwert = 5
 
             self.btn = tk.Button(master=self.card_frame, command=lambda i=i: self.change(i),
                                  image=self.card_images[i])
