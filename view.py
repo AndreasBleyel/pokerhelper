@@ -13,8 +13,12 @@ class View:
         self.card_back = None
 
         self.window = tk.Tk()
-        self.window.resizable(False, False)
+        #self.window.resizable(False, False)
         self.window.title("Texas Help'em")
+
+        #self.card_window = tk.Tk()
+        self.card_frame = tk.Frame(master=self.window, bg='#FFCFC9')
+        self.card_frame.place(x=5, y=200, width=800, height=350)
 
         self.btn_hand_card1 = None
         self.btn_hand_card2 = None
@@ -85,19 +89,38 @@ class View:
         self.btn_board_card5.grid(row=0, column=6)
 
         for i in range(len(self.cards)):
-            self.img = Image.open(self.cards[i].img_path)
-            self.img = self.img.resize(((55, 75)), Image.ANTIALIAS)
-            self.card_images.append(ImageTk.PhotoImage(self.img))
+            img = Image.open(self.cards[i].img_path)
+            img = img.resize(((55, 75)), Image.ANTIALIAS)
+            self.card_images.append(ImageTk.PhotoImage(img))
 
-        card_row = 4
-        card_col = 0
+        # card_row = 4
+        # card_col = 0
+        # for i in range(52):
+        #     if card_col == 13:
+        #         card_col = 0
+        #         card_row = card_row + 1
+        #     self.btn = tk.Button(self.window, command= lambda i=i: self.change(i),
+        #                          image=self.card_images[i]).grid(row=card_row,column=card_col,padx=2, pady=1)
+        #     card_col = card_col +1
+
+        reihe = 0
+        spalte = 0
+        xwert =  0
+        ywert = 0
         for i in range(52):
-            if card_col == 13:
-                card_col = 0
-                card_row = card_row + 1
-            self.btn = tk.Button(self.window, command= lambda i=i: self.change(i),
-                                 image=self.card_images[i]).grid(row=card_row,column=card_col,padx=2, pady=1)
-            card_col = card_col +1
+            if spalte == 13:
+                spalte = 0
+                reihe = reihe +1
+                ywert = ywert + 80
+                xwert = 0
+
+            self.btn = tk.Button(master=self.card_frame, command= lambda i=i: self.change(i),
+                                 image=self.card_images[i])
+            self.btn.place(x=xwert, y=ywert)
+            xwert = xwert + 60
+            spalte = spalte + 1
+
+
 
     def set_json_label(self, json):
         self.json.set(json)
