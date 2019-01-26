@@ -1,5 +1,5 @@
 import ApiValues
-import json
+
 
 class Controller:
     def __init__(self, view, model):
@@ -10,11 +10,14 @@ class Controller:
         self.was_selected = "Hand"
         self.card_to_set = "hand_card1"
 
+        # dict to save api response
+        self.response = {}
+
     def change(self, which_btn):
         if which_btn == "calc":
             try:
-                api_response = json.dumps(self.model.calc_odds(), indent=4, sort_keys=True)
-                self.view.set_json_label(api_response)
+                self.response = ApiValues.api_response
+                self.display_infos()
             except UnboundLocalError:
                 print("Hand missing")
         elif which_btn == "hand_card1" or which_btn == "hand_card2" or which_btn == "board_card1" \
@@ -103,6 +106,36 @@ class Controller:
             self.view.highlight_board_card4()
         elif place == "board_card5":
             self.view.highlight_board_card5()
+
+    def display_infos(self):
+        if self.response.get("state") == "pre-flop":
+            self.display_preflop_infos()
+        elif self.response.get("state") == "flop":
+            pass
+        elif self.response.get("state") == "turn":
+            pass
+        elif self.response.get("state") == "river":
+            pass
+
+    def display_preflop_infos(self):
+        print(self.response)
+        infos = "Chances to hit specific hand:\n" \
+                "1 Pair: " + str(self.response.get("data").get("hit").get("1P")) + "\n" + \
+                "2 Pairs: " + str(self.response.get("data").get("hit").get("2P"))
+
+        infos3 = "Chances to hit specific hand:\n" \
+                 "High Card: {0[data][hit][HC]:.2%}\n" \
+                 "1 Pair: {0[data][hit][1P]:.2%}\n" \
+                 "2 Pairs: {0[data][hit][2P]:.2%}\n" \
+                 "3 of a kind: {0[data][hit][3K]:.2%}\n" \
+                 "Straight: {0[data][hit][ST]:.2%}\n" \
+                 "Full House: {0[data][hit][FH]:.2%}\n" \
+                 "Flush: {0[data][hit][FL]:.2%}\n" \
+                 "4 of a kind: {0[data][hit][4K]:.2%}\n" \
+                 "Straight Flush: {0[data][hit][SF]:.2%}" \
+            .format(self.response)
+        self.view.set_odd_infos_label(infos3)
+
 
     def start(self):
         self.view.highlight_hand_card1()

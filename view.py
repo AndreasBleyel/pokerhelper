@@ -28,6 +28,9 @@ class View:
         self.display_infos_frame = tk.Frame(master=self.window, bg="#FFFCFC")
         self.display_infos_frame.place(x= 800, y=5, width=380, height = 525)
 
+        self.pot_odds_frame = tk.Frame(master=self.window, bg="#FFCCAA")
+        self.pot_odds_frame.place(x= 685, y=5, width=110, height = 185)
+
         self.btn_hand_card1 = None
         self.btn_hand_card2 = None
         self.btn_board_card1 = None
@@ -37,9 +40,9 @@ class View:
         self.btn_board_card5 = None
         self.show_cards()
 
-        self.json = tk.StringVar()
-        self.json_label = tk.Label(master=self.display_infos_frame, textvariable=self.json)
-        self.json_label.place(x=5, y=5, width= 370, height = 515)
+        self.odd_infos = tk.StringVar()
+        self.odd_infos_label = tk.Label(master=self.display_infos_frame, textvariable=self.odd_infos)
+        self.odd_infos_label.place(x=5, y=5, width= 370, height = 515)
 
         self.board_label = tk.Label(self.window, text="Board").grid(row=0, column=1, padx=5, pady=5)
         self.board_hand = tk.Label(self.window, text="Hand").grid(row=1, column=1, padx=5, pady=5)
@@ -66,6 +69,9 @@ class View:
         self.total_pot_label.place(x=5, y=55)
         self.total_pot = tk.Entry(master=self.pot_infos_frame)
         self.total_pot.place(x=100, y=55)
+
+        self.pot_odds_label = tk.Label(master=self.pot_odds_frame, text="Pot Odds")
+        self.pot_odds_label.place(x=5, y=5)
 
     def set_listener(self, listener):
         self.listener = listener
@@ -129,8 +135,8 @@ class View:
             xwert = xwert + 60
             spalte = spalte + 1
 
-    def set_json_label(self, json):
-        self.json.set(json)
+    def set_odd_infos_label(self, infos):
+        self.odd_infos.set(infos)
 
     def set_player_hand(self, player_hand):
         pass
