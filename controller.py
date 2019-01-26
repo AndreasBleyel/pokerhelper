@@ -12,8 +12,11 @@ class Controller:
 
     def change(self, which_btn):
         if which_btn == "calc":
-            api_response = json.dumps(self.model.calc_odds(), indent=4, sort_keys=True)
-            self.view.set_json_label(api_response)
+            try:
+                api_response = json.dumps(self.model.calc_odds(), indent=4, sort_keys=True)
+                self.view.set_json_label(api_response)
+            except UnboundLocalError:
+                print("Hand missing")
         elif which_btn == "hand_card1" or which_btn == "hand_card2" or which_btn == "board_card1" \
                 or which_btn == "board_card2" or which_btn == "board_card3" or which_btn == "board_card4" \
                 or which_btn == "board_card5":

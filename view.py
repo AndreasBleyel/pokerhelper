@@ -39,7 +39,7 @@ class View:
 
         self.json = tk.StringVar()
         self.json_label = tk.Label(master=self.display_infos_frame, textvariable=self.json)
-        self.json_label.place(x=5, y=5)
+        self.json_label.place(x=5, y=5, width= 370, height = 515)
 
         self.board_label = tk.Label(self.window, text="Board").grid(row=0, column=1, padx=5, pady=5)
         self.board_hand = tk.Label(self.window, text="Hand").grid(row=1, column=1, padx=5, pady=5)
