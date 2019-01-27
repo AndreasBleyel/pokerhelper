@@ -10,9 +10,8 @@ class Model:
         self._player_hand = [None] * 2
         self._board = [None] * 5
         self._cards = []
-        # self._bid_opponent = 0
-        # self._bid_player = 0
-        # self._total_pot = 0
+        self.json = {}
+
         self.card_values = {
             0: "2c",
             1: "3c",
@@ -87,45 +86,14 @@ class Model:
     def board(self, value):
         self._board = value
 
-    # @property
-    # def bid_player(self):
-    #     return self._bid_player
-    #
-    # @bid_player.setter
-    # def bid_player(self, value):
-    #     self._bid_player = value
-    #
-    # @property
-    # def bid_opponent(self):
-    #     return self._bid_opponent
-    #
-    # @bid_opponent.setter
-    # def bid_opponent(self, value):
-    #     self._bid_opponent = value
-    #
-    # @property
-    # def total_pot(self):
-    #     return self._total_pot
-    #
-    # @total_pot.setter
-    # def total_pot(self, value):
-    #     self._total_pot = value
-
-
-    def call_api(self):
+    def calculate_odds(self):
         if self.evaluate_state_of_game() == "flop":
             # flop
             hand = self.card_values.get(self.player_hand[0]) + "," + self.card_values.get(self.player_hand[1])
             board = self.card_values.get(self.board[0]) + "," + self.card_values.get(
                 self.board[1]) + "," + self.card_values.get(self.board[2])
             request_url = ApiValues.api_url + "flop?board=" + board + "&hole=" + hand
-            response = requests.get(request_url, headers=ApiValues.api_headers)
-            if response.status_code != 200:
-                print('API Call unsuccessful {}'.format(response.status_code))
-                return 0
-            else:
-                json = response.json()
-                json["state"] = "flop"
+            self.make_call(request_url, "flop")
 
         elif self.evaluate_state_of_game() == "turn":
             # turn
@@ -133,13 +101,7 @@ class Model:
             board = self.card_values.get(self.board[0]) + "," + self.card_values.get(
                 self.board[1]) + "," + self.card_values.get(self.board[2]) + "," + self.card_values.get(self.board[3])
             request_url = ApiValues.api_url + "turn?board=" + board + "&hole=" + hand
-            response = requests.get(request_url, headers=ApiValues.api_headers)
-            if response.status_code != 200:
-                print('API Call unsuccessful {}'.format(response.status_code))
-                return 0
-            else:
-                json = response.json()
-                json["state"] = "turn"
+            self.make_call(request_url, "turn")
 
         elif self.evaluate_state_of_game() == "river":
             # river
@@ -148,38 +110,49 @@ class Model:
                 self.board[1]) + "," + self.card_values.get(self.board[2]) + "," + self.card_values.get(
                 self.board[3]) + "," + self.card_values.get(self.board[4])
             request_url = ApiValues.api_url + "river?board=" + board + "&hole=" + hand
-            response = requests.get(request_url, headers=ApiValues.api_headers)
-            if response.status_code != 200:
-                print('API Call unsuccessful {}'.format(response.status_code))
-                return 0
-            else:
-                json = response.json()
-                json["state"] = "river"
+            self.make_call(request_url, "river")
 
-        else:
+        elif self.evaluate_state_of_game() == "pre-flop":
             # pre-flop.json
             hand = self.card_values.get(self.player_hand[0]) + "," + self.card_values.get(self.player_hand[1])
             request_url = ApiValues.api_url + "pre-flop?hole=" + hand
+            self.make_call(request_url, "pre-flop")
+        else:
+            self.json = {"state": "nohand"}
+
+        return self.json
+
+    def make_call(self, request_url, state):
+        try:
             response = requests.get(request_url, headers=ApiValues.api_headers)
             if response.status_code != 200:
-                print('API Call unsuccessful {}'.format(response.status_code))
-                return 0
+                self.json["status"] = response.status_code
+                self.json["msg"] = response.json()["message"]
             else:
-                json = response.json()
-                json["state"] = "pre-flop"
-
-        return json
+                self.json = response.json()
+                self.json["state"] = state
+        except requests.exceptions.RequestException as e:
+            self.json["status"] = 0
+            self.json["msg"] = e
 
     def evaluate_state_of_game(self):
-        if self.board[0] is not None and self.board[1] is not None and self.board[2] is not None and self.board[3] is None and self.board[4] is None:
-            return "flop"
-        elif self.board[0] is not None and self.board[1] is not None and self.board[2] is not None and self.board[3] is not None and self.board[4] is None:
-            return "turn"
-        elif self.board[0] is not None and self.board[1] is not None and self.board[2] is not None and self.board[3] is not None and self.board[4] is not None:
-            return "river"
-        elif self.player_hand[0] is not None and self.player_hand[1] is not None and self.board[0] is None and self.board[1] is None and self.board[2] is None and \
-                self.board[3] is None and self.board[4] is None:
-            return "pre-flop"
+        if self.player_hand[0] is not None and self.player_hand[1] is not None:
+            if self.board[0] is not None and self.board[1] is not None and self.board[2] is not None and self.board[
+                3] is None and self.board[4] is None:
+                return "flop"
+            elif self.board[0] is not None and self.board[1] is not None and self.board[2] is not None and self.board[
+                3] is not None and self.board[4] is None:
+                return "turn"
+            elif self.board[0] is not None and self.board[1] is not None and self.board[2] is not None and self.board[
+                3] is not None and self.board[4] is not None:
+                return "river"
+            elif self.board[0] is None and self.board[1] is None and self.board[2] is None and \
+                    self.board[3] is None and self.board[4] is None:
+                return "pre-flop"
+            else:
+                return "invalidboard"
+        else:
+            return "nohand"
 
     def create_cards(self):
         path = "PNG/"

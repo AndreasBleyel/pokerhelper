@@ -61,6 +61,7 @@ class View:
         self.bid_opp_label = tk.Label(master=self.pot_infos_frame, text="Bid Opponent:")
         self.bid_opp_label.place(x=5, y=5)
         self.bid_opp = tk.Entry(master=self.pot_infos_frame)
+        self.bid_opp.insert(0,0)
         self.bid_opp.place(x=100, y=5)
 
         # self.bid_player_label = tk.Label(master=self.pot_infos_frame, text="Bid Player:")
@@ -71,6 +72,7 @@ class View:
         self.total_pot_label = tk.Label(master=self.pot_infos_frame, text="Total Pot:")
         self.total_pot_label.place(x=5, y=55)
         self.total_pot = tk.Entry(master=self.pot_infos_frame)
+        self.total_pot.insert(0,0)
         self.total_pot.place(x=100, y=55)
 
         self.pot_odds_label = tk.Label(master=self.pot_odds_frame, text="Pot Odds")
@@ -231,6 +233,9 @@ class View:
 
     def get_bid_opponent(self):
         return self.bid_opp.get()
+
+    def set_bid_opponent_zero(self):
+        self.bid_opp.insert(0,0)
 
     def get_total_pot(self):
         return self.total_pot.get()

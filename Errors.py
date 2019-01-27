@@ -1,0 +1,7 @@
+NO_POT = "Enter actual Pot Size"
+NO_OPP_BID = "Enter Opponent Bid"
+NEG_NR = "Enter positive Number"
+NOT_A_NR = "Enter Number. Point for Decimal"
+NO_HAND = "No Player Hand"
+INV_BOARD = "Invalid Board"
+API_ERR = "Api call unsuccessful"
