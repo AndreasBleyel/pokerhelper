@@ -1,5 +1,5 @@
 import requests
-
+import view
 import ApiValues
 from Card import Card
 
@@ -10,6 +10,9 @@ class Model:
         self._player_hand = [None] * 2
         self._board = [None] * 5
         self._cards = []
+        # self._bid_opponent = 0
+        # self._bid_player = 0
+        # self._total_pot = 0
         self.card_values = {
             0: "2c",
             1: "3c",
@@ -84,8 +87,33 @@ class Model:
     def board(self, value):
         self._board = value
 
+    # @property
+    # def bid_player(self):
+    #     return self._bid_player
+    #
+    # @bid_player.setter
+    # def bid_player(self, value):
+    #     self._bid_player = value
+    #
+    # @property
+    # def bid_opponent(self):
+    #     return self._bid_opponent
+    #
+    # @bid_opponent.setter
+    # def bid_opponent(self, value):
+    #     self._bid_opponent = value
+    #
+    # @property
+    # def total_pot(self):
+    #     return self._total_pot
+    #
+    # @total_pot.setter
+    # def total_pot(self, value):
+    #     self._total_pot = value
+
+
     def call_api(self):
-        if self.get_state_of_game() == "flop":
+        if self.evaluate_state_of_game() == "flop":
             # flop
             hand = self.card_values.get(self.player_hand[0]) + "," + self.card_values.get(self.player_hand[1])
             board = self.card_values.get(self.board[0]) + "," + self.card_values.get(
@@ -99,7 +127,7 @@ class Model:
                 json = response.json()
                 json["state"] = "flop"
 
-        elif self.get_state_of_game() == "turn":
+        elif self.evaluate_state_of_game() == "turn":
             # turn
             hand = self.card_values.get(self.player_hand[0]) + "," + self.card_values.get(self.player_hand[1])
             board = self.card_values.get(self.board[0]) + "," + self.card_values.get(
@@ -113,7 +141,7 @@ class Model:
                 json = response.json()
                 json["state"] = "turn"
 
-        elif self.get_state_of_game() == "river":
+        elif self.evaluate_state_of_game() == "river":
             # river
             hand = self.card_values.get(self.player_hand[0]) + "," + self.card_values.get(self.player_hand[1])
             board = self.card_values.get(self.board[0]) + "," + self.card_values.get(
@@ -142,18 +170,15 @@ class Model:
 
         return json
 
-    def get_state_of_game(self):
-        # flop
-        if self.board[0] and self.board[1] and self.board[2] and not self.board[3] and not self.board[4]:
+    def evaluate_state_of_game(self):
+        if self.board[0] is not None and self.board[1] is not None and self.board[2] is not None and self.board[3] is None and self.board[4] is None:
             return "flop"
-        # turn
-        elif self.board[0] and self.board[1] and self.board[2] and self.board[3] and not self.board[4]:
+        elif self.board[0] is not None and self.board[1] is not None and self.board[2] is not None and self.board[3] is not None and self.board[4] is None:
             return "turn"
-        # river
-        elif self.board[0] and self.board[1] and self.board[2] and self.board[3] and self.board[4]:
+        elif self.board[0] is not None and self.board[1] is not None and self.board[2] is not None and self.board[3] is not None and self.board[4] is not None:
             return "river"
-        # pre-flop.json
-        else:
+        elif self.player_hand[0] is not None and self.player_hand[1] is not None and self.board[0] is None and self.board[1] is None and self.board[2] is None and \
+                self.board[3] is None and self.board[4] is None:
             return "pre-flop"
 
     def create_cards(self):
@@ -166,34 +191,3 @@ class Model:
 
         self._cards.append(Card(path + back + format))
         return self._cards
-
-    # import requests
-    #
-    # def fetch_all():
-    #     resp = requests.get('http://data.fixer.io/api/latest?access_key=be677e4869463accc8bdb0d690ba3e89&format=1')
-    #     if resp.status_code != 200:
-    #         print('API Call unsuccessful {}'.format(resp.status_code))
-    #         return 1
-    #     else:
-    #         json = resp.json()
-    #         return json
-    #
-    # def get_rate(json, symbol):
-    #     return json["rates"][symbol]
-    #
-    # all_data = fetch_all()
-    #
-    # print("=============== Available rates ================")
-    # for key in all_data["rates"]:
-    #     print(key + " ", end="")
-    # print("\n ============================================= ")
-    #
-    # symbol = input("Enter currency: ").upper()
-    # value = float(input("Enter value: "))
-    # custom_cur = Currency(value, symbol, get_rate(all_data, symbol))
-    #
-    # print("Your currency: {} - converted to EUR: {:.2f}".format(custom_cur, custom_cur.value / custom_cur.rate))
-    # print("============================================= ")
-    # usd1 = Currency(15, "USD", get_rate(all_data, "USD"))
-    # eur1 = Currency(15)
-    # print(usd1 + 5 + eur1)

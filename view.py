@@ -14,22 +14,25 @@ class View:
 
         self.window = tk.Tk()
         self.window.title("Texas Help'em")
-        self.window.minsize(1200,535)
+        self.window.minsize(1200, 535)
+
+        self.board_bg_frame = tk.Frame(master=self.window, bg="#076324")
+        self.board_bg_frame.place(x=5, y=5, width=365, height=190)
 
         self.card_frame = tk.Frame(master=self.window, bg='#FFCFC9')
         self.card_frame.place(x=5, y=200, width=790, height=330)
 
         self.button_frame = tk.Frame(master=self.window, bg="#FFABAB")
-        self.button_frame.place(x=400, y=90, width=280, height=100)
+        self.button_frame.place(x=400, y=90, width=280, height=105)
 
         self.pot_infos_frame = tk.Frame(master=self.window, bg="#FFCDCD")
-        self.pot_infos_frame.place(x=400, y=5, width=280, height=80)
+        self.pot_infos_frame.place(x=400, y=5, width=280, height=90)
 
         self.display_infos_frame = tk.Frame(master=self.window, bg="#FFFCFC")
-        self.display_infos_frame.place(x= 800, y=5, width=380, height = 525)
+        self.display_infos_frame.place(x=800, y=5, width=380, height=525)
 
         self.pot_odds_frame = tk.Frame(master=self.window, bg="#FFCCAA")
-        self.pot_odds_frame.place(x= 685, y=5, width=110, height = 185)
+        self.pot_odds_frame.place(x=685, y=5, width=110, height=190)
 
         self.btn_hand_card1 = None
         self.btn_hand_card2 = None
@@ -41,29 +44,29 @@ class View:
         self.show_cards()
 
         self.odd_infos = tk.StringVar()
-        self.odd_infos_label = tk.Label(master=self.display_infos_frame, textvariable=self.odd_infos)
-        self.odd_infos_label.place(x=5, y=5, width= 370, height = 515)
+        self.odd_infos_label = tk.Label(master=self.display_infos_frame, anchor=tk.NW, justify=tk.LEFT, textvariable=self.odd_infos)
+        self.odd_infos_label.place(x=5, y=5, width=370, height=515)
 
         self.board_label = tk.Label(self.window, text="Board").grid(row=0, column=1, padx=5, pady=5)
         self.board_hand = tk.Label(self.window, text="Hand").grid(row=1, column=1, padx=5, pady=5)
 
         self.btn_calc = tk.Button(master=self.button_frame, command=lambda: self.change("calc"),
                                   text="Calc")
-        self.btn_calc.place(x=5, y=5)
+        self.btn_calc.place(x=5, y=10)
 
         self.btn_del_card = tk.Button(self.button_frame, command=lambda: self.change("del"),
                                       text="Remove Card")
-        self.btn_del_card.place(x=5, y=40)
+        self.btn_del_card.place(x=5, y=45)
 
         self.bid_opp_label = tk.Label(master=self.pot_infos_frame, text="Bid Opponent:")
-        self.bid_opp_label.place(x=5,y=5)
+        self.bid_opp_label.place(x=5, y=5)
         self.bid_opp = tk.Entry(master=self.pot_infos_frame)
-        self.bid_opp.place(x=100,y =5)
+        self.bid_opp.place(x=100, y=5)
 
-        self.bid_player_label = tk.Label(master=self.pot_infos_frame, text="Bid Player:")
-        self.bid_player_label.place(x=5,y=30)
-        self.bid_player = tk.Entry(master=self.pot_infos_frame)
-        self.bid_player.place(x=100, y=30)
+        # self.bid_player_label = tk.Label(master=self.pot_infos_frame, text="Bid Player:")
+        # self.bid_player_label.place(x=5, y=30)
+        # self.bid_player = tk.Entry(master=self.pot_infos_frame)
+        # self.bid_player.place(x=100, y=30)
 
         self.total_pot_label = tk.Label(master=self.pot_infos_frame, text="Total Pot:")
         self.total_pot_label.place(x=5, y=55)
@@ -222,6 +225,15 @@ class View:
             self.btn_board_card5.configure(image=self.card_images[-1])
         else:
             self.btn_board_card5.configure(image=self.card_images[index_image])
+
+    # def get_bid_player(self):
+    #     return self.bid_player.get()
+
+    def get_bid_opponent(self):
+        return self.bid_opp.get()
+
+    def get_total_pot(self):
+        return self.total_pot.get()
 
     def show(self):
         self.window.mainloop()

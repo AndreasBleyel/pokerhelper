@@ -9,14 +9,27 @@ class Controller:
 
         self.was_selected = "Hand"
         self.card_to_set = "hand_card1"
-
-        # dict to save api response
+        self.odds = {
+            "one_option": {
+                "best": 0,
+                "avg": 0,
+                "rec_best": "",
+                "rec_avg": ""
+            },
+            "two_options": {
+                "best": 0,
+                "avg": 0,
+                "rec_best": "",
+                "rec_avg": ""
+            }
+        }
         self.response = {}
 
     def change(self, which_btn):
         if which_btn == "calc":
             try:
-                self.response = ApiValues.api_response
+                # self.response = ApiValues.api_response
+                self.response = self.model.call_api()
                 self.display_infos()
             except UnboundLocalError:
                 print("Hand missing")
@@ -108,34 +121,112 @@ class Controller:
             self.view.highlight_board_card5()
 
     def display_infos(self):
-        if self.response.get("state") == "pre-flop":
-            self.display_preflop_infos()
-        elif self.response.get("state") == "flop":
+        if self.get_state_of_game() == "pre-flop":
+            infos = self.create_pre_flop_infos()
+        elif self.get_state_of_game() == "flop":
+            self.calc_odds()
+            infos = self.create_flop_infos()
+        elif self.get_state_of_game() == "turn":
+            self.calc_odds()
             pass
-        elif self.response.get("state") == "turn":
-            pass
-        elif self.response.get("state") == "river":
+        elif self.get_state_of_game() == "river":
             pass
 
-    def display_preflop_infos(self):
+        self.view.set_odd_infos_label(infos)
+
+    def create_pre_flop_infos(self):
         print(self.response)
+
         infos = "Chances to hit specific hand:\n" \
-                "1 Pair: " + str(self.response.get("data").get("hit").get("1P")) + "\n" + \
-                "2 Pairs: " + str(self.response.get("data").get("hit").get("2P"))
-
-        infos3 = "Chances to hit specific hand:\n" \
-                 "High Card: {0[data][hit][HC]:.2%}\n" \
-                 "1 Pair: {0[data][hit][1P]:.2%}\n" \
-                 "2 Pairs: {0[data][hit][2P]:.2%}\n" \
-                 "3 of a kind: {0[data][hit][3K]:.2%}\n" \
-                 "Straight: {0[data][hit][ST]:.2%}\n" \
-                 "Full House: {0[data][hit][FH]:.2%}\n" \
-                 "Flush: {0[data][hit][FL]:.2%}\n" \
-                 "4 of a kind: {0[data][hit][4K]:.2%}\n" \
-                 "Straight Flush: {0[data][hit][SF]:.2%}" \
+                "High Card: {0[data][hit][HC]:.2%}\n" \
+                "1 Pair: {0[data][hit][1P]:.2%}\n" \
+                "2 Pairs: {0[data][hit][2P]:.2%}\n" \
+                "3 of a kind: {0[data][hit][3K]:.2%}\n" \
+                "Straight: {0[data][hit][ST]:.2%}\n" \
+                "Full House: {0[data][hit][FH]:.2%}\n" \
+                "Flush: {0[data][hit][FL]:.2%}\n" \
+                "4 of a kind: {0[data][hit][4K]:.2%}\n" \
+                "Straight Flush: {0[data][hit][SF]:.2%}\n\n" \
+                "Highest possible hand:\n" \
+                "{0[data][ranking][best][hand_name]} Rank: {0[data][ranking][best][rank]}\n" \
+                "Average possible hand:\n" \
+                "{0[data][ranking][average][hand_name]} Rank: {0[data][ranking][average][rank]}\n" \
+                "Worst possible hand:\n" \
+                "{0[data][ranking][worst][hand_name]} Rank: {0[data][ranking][worst][rank]}\n\n" \
             .format(self.response)
-        self.view.set_odd_infos_label(infos3)
 
+        return infos
+
+    def create_flop_infos(self):
+        infos = "Chances to hit specific hand:\n" \
+                "High Card: {0[data][me][hit][HC]:.2%}\n" \
+                "1 Pair: {0[data][me][hit][1P]:.2%}\n" \
+                "2 Pairs: {0[data][me][hit][2P]:.2%}\n" \
+                "3 of a kind: {0[data][me][hit][3K]:.2%}\n" \
+                "Straight: {0[data][me][hit][ST]:.2%}\n" \
+                "Full House: {0[data][me][hit][FH]:.2%}\n" \
+                "Flush: {0[data][me][hit][FL]:.2%}\n" \
+                "4 of a kind: {0[data][me][hit][4K]:.2%}\n" \
+                "Straight Flush: {0[data][me][hit][SF]:.2%}\n" \
+                "Highest possible hand:\n" \
+                "{0[data][me][ranking][best][hand_name]} Rank: {0[data][me][ranking][best][rank]}\n" \
+                "Average possible hand:\n" \
+                "{0[data][me][ranking][average][hand_name]} Rank: {0[data][me][ranking][average][rank]}\n" \
+                "Worst possible hand:\n" \
+                "{0[data][me][ranking][worst][hand_name]} Rank: {0[data][me][ranking][worst][rank]}\n\n" \
+            .format(self.response)
+
+        infos = infos + \
+                "Odds one card to follow - best hand:\n" \
+                "{0[one_option][best]:.2%} -> {0[one_option][rec_best]}\n" \
+                "Odds one card to follow - avg hand:\n" \
+                "{0[one_option][avg]:.2%} -> {0[one_option][rec_avg]}\n" \
+                "Odds Turn & River - best hand:\n" \
+                "{0[two_options][best]:.2%} -> {0[two_options][rec_best]}\n" \
+                "Odds Turn & River - avg hand:\n" \
+                "{0[two_options][avg]:.2%} -> {0[two_options][rec_avg]}\n" \
+                    .format(self.odds)
+        return infos
+
+    def calc_odds(self):
+        try:
+            bid_opponent = float(self.view.get_bid_opponent())
+            total_pot = float(self.view.get_total_pot())
+        except ValueError:
+            print("Not a Number")
+
+        pot_odds = bid_opponent / (total_pot + bid_opponent * 2)
+        self.odds["one_option"]["best"] = self.get_odds_best_hand()
+        self.odds["one_option"]["avg"] = self.get_odds_avg_hand()
+        self.odds["one_option"]["rec_best"] = "Call" if self.get_odds_best_hand() >= pot_odds else "Fold"
+        self.odds["one_option"]["rec_avg"] = "Call" if self.get_odds_avg_hand() >= pot_odds else "Fold"
+
+        self.odds["two_options"]["best"] = (self.get_odds_best_hand() - 0.01) * 2
+        self.odds["two_options"]["avg"] = (self.get_odds_avg_hand() - 0.01) * 2
+        self.odds["two_options"]["rec_best"] = "Call" if self.odds["two_options"]["best"] >= pot_odds else "Fold"
+        self.odds["two_options"]["rec_avg"] = "Call" if self.odds["two_options"]["avg"] >= pot_odds else "Fold"
+
+    def get_code_best_possible_hand(self):
+        return self.response.get("data").get("me").get("ranking").get("best").get("hand_code")
+
+    def get_code_avg_possible_hand(self):
+        return self.response.get("data").get("me").get("ranking").get("average").get("hand_code")
+
+    def get_odds_best_hand(self):
+        return self.response.get("data").get("me").get("hit").get(self.get_code_best_possible_hand())
+
+    def get_odds_avg_hand(self):
+        return self.response.get("data").get("me").get("hit").get(self.get_code_avg_possible_hand())
+
+    def get_state_of_game(self):
+        if self.response.get("state") == "pre-flop":
+            return "pre-flop"
+        elif self.response.get("state") == "flop":
+            return "flop"
+        elif self.response.get("state") == "turn":
+            return "turn"
+        elif self.response.get("state") == "river":
+            return "river"
 
     def start(self):
         self.view.highlight_hand_card1()

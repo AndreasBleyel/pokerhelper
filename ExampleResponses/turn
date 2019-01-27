@@ -1,0 +1,90 @@
+//turn
+//10c 9c
+{
+  "status": 200,
+  "status_message": "OK",
+  "data": {
+    "me": {
+      "hit": {
+        "1P": 0,
+        "2P": 0.739130434,
+        "3K": 0,
+        "4K": 0,
+        "FH": 0.086956521,
+        "FL": 0,
+        "HC": 0,
+        "SF": 0,
+        "ST": 0.173913043
+      },
+      "ranking": {
+        "best": {
+          "rank": 219,
+          "hand_code": "FH",
+          "hand_name": "Full house",
+          "rank_top_percent": 0.074492768
+        },
+        "worst": {
+          "rank": 2940,
+          "hand_code": "2P",
+          "hand_name": "Two pairs",
+          "rank_top_percent": 5.492071676
+        },
+        "average": {
+          "rank": 2461.4783,
+          "hand_code": "3K",
+          "hand_name": "Three of a kind",
+          "rank_top_percent": 2.859044753
+        }
+      },
+      "hit_odds": {
+        "1P": 0,
+        "2P": 2.8333333218333334,
+        "3K": 0,
+        "4K": 0,
+        "FH": 0.09523809435147391,
+        "FL": 0,
+        "HC": 0,
+        "SF": 0,
+        "ST": 0.21052631508864264
+      },
+      "hit_at_least": {
+        "1P": 1,
+        "2P": 1,
+        "3K": 0.260869565,
+        "4K": 0,
+        "FH": 0.086956521,
+        "FL": 0.086956521,
+        "HC": 1,
+        "SF": 0,
+        "ST": 0.260869565
+      },
+      "hit_at_least_odds": {
+        "1P": "None",
+        "2P": "None",
+        "3K": 0.3529411760726644,
+        "4K": 0,
+        "FH": 0.09523809435147391,
+        "FL": 0.09523809435147391,
+        "HC": "None",
+        "SF": 0,
+        "ST": 0.3529411760726644
+      }
+    },
+    "winning": {
+      "best": {
+        "odds": 123.456790123,
+        "probability": 0.9919
+      },
+      "worst": {
+        "odds": 3.511235955,
+        "probability": 0.7152
+      },
+      "average": {
+        "odds": 11.07206485927018,
+        "skewness": -1.5741881074394912,
+        "probability": 0.90968261,
+        "standard_deviation": 0.06833492106290143
+      }
+    }
+  }
+}
