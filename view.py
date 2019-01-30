@@ -31,9 +31,6 @@ class View:
         self.display_infos_frame = tk.Frame(master=self.window, bg="#FFFCFC")
         self.display_infos_frame.place(x=800, y=5, width=380, height=525)
 
-        self.pot_odds_frame = tk.Frame(master=self.window, bg="#FFCCAA")
-        self.pot_odds_frame.place(x=685, y=5, width=110, height=190)
-
         self.btn_hand_card1 = None
         self.btn_hand_card2 = None
         self.btn_board_card1 = None
@@ -58,16 +55,15 @@ class View:
                                       text="Remove Card")
         self.btn_del_card.place(x=5, y=45)
 
+        self.btn_del_all = tk.Button(self.button_frame, command=lambda: self.change("del_all"),
+                                      text="Remove All")
+        self.btn_del_all.place(x=125, y=45)
+
         self.bid_opp_label = tk.Label(master=self.pot_infos_frame, text="Bid Opponent:")
         self.bid_opp_label.place(x=5, y=5)
         self.bid_opp = tk.Entry(master=self.pot_infos_frame)
         self.bid_opp.insert(0,0)
         self.bid_opp.place(x=100, y=5)
-
-        # self.bid_player_label = tk.Label(master=self.pot_infos_frame, text="Bid Player:")
-        # self.bid_player_label.place(x=5, y=30)
-        # self.bid_player = tk.Entry(master=self.pot_infos_frame)
-        # self.bid_player.place(x=100, y=30)
 
         self.total_pot_label = tk.Label(master=self.pot_infos_frame, text="Total Pot:")
         self.total_pot_label.place(x=5, y=55)
@@ -75,8 +71,6 @@ class View:
         self.total_pot.insert(0,0)
         self.total_pot.place(x=100, y=55)
 
-        self.pot_odds_label = tk.Label(master=self.pot_odds_frame, text="Pot Odds")
-        self.pot_odds_label.place(x=5, y=5)
 
     def set_listener(self, listener):
         self.listener = listener
