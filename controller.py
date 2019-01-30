@@ -185,7 +185,7 @@ class Controller:
                     "Full House: {0[data][me][hit][FH]:.2%}\n" \
                     "Flush: {0[data][me][hit][FL]:.2%}\n" \
                     "4 of a kind: {0[data][me][hit][4K]:.2%}\n" \
-                    "Straight Flush: {0[data][me][hit][SF]:.2%}\n" \
+                    "Straight Flush: {0[data][me][hit][SF]:.2%}\n\n" \
                     "Highest possible hand:\n" \
                     "{0[data][me][ranking][best][hand_name]} Rank: {0[data][me][ranking][best][rank]}\n" \
                     "Average possible hand:\n" \
