@@ -3,7 +3,7 @@
 Welcome to the pokerhelper. This Phyton-based application will
 help you to evaluate your chances of winning a hand in Texas-HoldEm NoLimit.
 
-###How to run the application:
+### How to run the application:
 1. Download or clone the repo onto your PC
 2. Get [python3](https://www.python.org/downloads/release/python-372/) for your system 
 3. This application uses the [poker-odds-calculator](https://rapidapi.com/sf-api-on-demand/api/poker-odds-calculator?utm_source=mashape&utm_medium=301) API
@@ -16,7 +16,7 @@ api_headers = {"X-Mashape-Key": api_key,
                 "Accept": "application/json"}`  
 5. enter your terminal and start the application with `phyton3 main.py`
 
-###How to use
+### How to use
 After the application has started, you will see 5 different areas 
 each of them serving a different purpose.
 
