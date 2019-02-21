@@ -67,6 +67,8 @@ The expected value of a call is determined by comparing the pot odds to the odds
 the call has a positive expectation; on average, a portion of the pot that is greater than the cost of the call is won. Conversely, if the odds of drawing a winning card are numerically lower than the pot odds, 
 the call has a negative expectation, and the expectation is to win less money on average than it costs to
 call the bet. The Odds are calculated based on your hand and the board. For a deeper explanation of Pots Odds see [Wiki-PotOdds](https://en.wikipedia.org/wiki/Pot_odds)
+
+
 **Notice:** In the above calculations, the simplistic assumption is that you are sitting behind an opponent. So if you are the first to bid and
 enter a Pot-Size of 0, you will always get the recommendation to "call". Even if your chances to hit a specific
 card are high, the Odds are to your favor and you get the recommendation to make the call, it does not mean that
